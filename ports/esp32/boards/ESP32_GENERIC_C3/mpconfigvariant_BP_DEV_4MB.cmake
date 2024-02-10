@@ -1,0 +1,8 @@
+set(SDKCONFIG_DEFAULTS
+    ${SDKCONFIG_DEFAULTS}
+    boards/sdkconfig.bp4mb.dev
+)
+
+list(APPEND MICROPY_DEF_BOARD
+    MICROPY_HW_MCU_NAME="ESP32C3-BP-DEV"
+)
