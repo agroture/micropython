@@ -1,0 +1,12 @@
+set(SDKCONFIG_DEFAULTS
+    ${SDKCONFIG_DEFAULTS}
+    boards/sdkconfig.free_flash
+    boards/sdkconfig.ota.bp4mb.dev
+)
+
+list(APPEND MICROPY_DEF_BOARD
+    MICROPY_HW_MCU_NAME="ESP32C3-OTA-BP-DEV"
+#   MICROPY_OPT_COMPUTED_GOTO=0
+    MICROPY_PY_BLUETOOTH=0
+    MICROPY_PY_LWIP=0
+)
