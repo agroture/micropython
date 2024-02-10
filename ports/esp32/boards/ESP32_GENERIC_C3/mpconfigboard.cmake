@@ -3,6 +3,74 @@ set(IDF_TARGET esp32c3)
 set(SDKCONFIG_DEFAULTS
     boards/sdkconfig.base
     ${SDKCONFIG_IDF_VERSION_SPECIFIC}
-    boards/sdkconfig.ble
     boards/ESP32_GENERIC_C3/sdkconfig.c3usb
 )
+
+
+if(MICROPY_BOARD_VARIANT STREQUAL "BP_DEV_4MB")
+    set(SDKCONFIG_DEFAULTS
+        ${SDKCONFIG_DEFAULTS}
+        boards/sdkconfig.bp4mb.dev
+    )
+
+    list(APPEND MICROPY_DEF_BOARD
+        MICROPY_HW_MCU_NAME="ESP32C3-BP-DEV"
+    )
+endif()
+
+if(MICROPY_BOARD_VARIANT STREQUAL "BP_PROD_4MB")
+    set(SDKCONFIG_DEFAULTS
+        ${SDKCONFIG_DEFAULTS}
+        boards/sdkconfig.bp4mb.prod
+    )
+
+    list(APPEND MICROPY_DEF_BOARD
+        MICROPY_HW_MCU_NAME="ESP32C3-BP-PROD"
+    )
+endif()
+
+if(MICROPY_BOARD_VARIANT STREQUAL "OTA_BP_DEV_4MB")
+    set(SDKCONFIG_DEFAULTS
+        ${SDKCONFIG_DEFAULTS}
+	boards/sdkconfig.minimal
+        boards/sdkconfig.ota.bp4mb.dev
+    )
+
+    list(APPEND MICROPY_DEF_BOARD
+        MICROPY_HW_MCU_NAME="ESP32C3-OTA-BP-DEV"
+        MICROPY_OPT_COMPUTED_GOTO=0
+        MICROPY_PY_NETWORK_LAN=0
+        MICROPY_PY_BLUETOOTH=0
+        MICROPY_PY_WEBSOCKET=0
+        MICROPY_PY_WEBREPL=0
+        MICROPY_PY_MACHINE_I2S=0
+        MICROPY_PY_OPENAMP=0
+        MICROPY_PY_LWIP=0
+        MICROPY_PY_FRAMEBUF=0
+    )
+endif()
+
+if(MICROPY_BOARD_VARIANT STREQUAL "OTA_BP_PROD_4MB")
+    set(SDKCONFIG_DEFAULTS
+        ${SDKCONFIG_DEFAULTS}
+	boards/sdkconfig.minimal
+        boards/sdkconfig.ota.bp4mb.prod
+    )
+
+    list(APPEND MICROPY_DEF_BOARD
+        MICROPY_HW_MCU_NAME="ESP32C3-OTA-BP-PROD"
+        MICROPY_OPT_COMPUTED_GOTO=0
+        MICROPY_PY_NETWORK_LAN=0
+        MICROPY_PY_BLUETOOTH=0
+        MICROPY_PY_SSL=0
+        MICROPY_SSL_MBEDTLS=0
+        MICROPY_PY_CRYPTOLIB=0
+        MICROPY_PY_HASHLIB=0
+        MICROPY_PY_WEBSOCKET=0
+        MICROPY_PY_WEBREPL=0
+        MICROPY_PY_MACHINE_I2S=0
+        MICROPY_PY_OPENAMP=0
+        MICROPY_PY_LWIP=0
+        MICROPY_PY_FRAMEBUF=0
+    )
+endif()
