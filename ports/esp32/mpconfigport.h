@@ -91,7 +91,7 @@
 #define MICROPY_PY_ESPNOW                   (1)
 #endif
 #ifndef MICROPY_PY_BLUETOOTH
-#define MICROPY_PY_BLUETOOTH                (1)
+#define MICROPY_PY_BLUETOOTH                (0)
 #define MICROPY_PY_BLUETOOTH_USE_SYNC_EVENTS (1)
 #define MICROPY_PY_BLUETOOTH_USE_SYNC_EVENTS_WITH_INTERLOCK (1)
 // Event stack size is the RTOS stack size minus an allowance for the stack used
@@ -100,13 +100,16 @@
 #define MICROPY_PY_BLUETOOTH_SYNC_EVENT_STACK_SIZE (CONFIG_BT_NIMBLE_TASK_STACK_SIZE - 1024)
 #define MICROPY_PY_BLUETOOTH_ENABLE_CENTRAL_MODE (1)
 #define MICROPY_PY_BLUETOOTH_ENABLE_PAIRING_BONDING (1)
-#define MICROPY_BLUETOOTH_NIMBLE            (1)
+#define MICROPY_BLUETOOTH_NIMBLE            (0)
 #define MICROPY_BLUETOOTH_NIMBLE_BINDINGS_ONLY (1)
 #endif
 #define MICROPY_PY_HASHLIB_MD5              (1)
 #define MICROPY_PY_HASHLIB_SHA1             (1)
 #define MICROPY_PY_HASHLIB_SHA256           (1)
+#ifndef MICROPY_PY_CRYPTOLIB
 #define MICROPY_PY_CRYPTOLIB                (1)
+#endif
+#define MICROPY_PY_CRYPTOLIB_CTR            (1)
 #define MICROPY_PY_RANDOM_SEED_INIT_FUNC    (esp_random())
 #define MICROPY_PY_OS_INCLUDEFILE           "ports/esp32/modos.c"
 #define MICROPY_PY_OS_DUPTERM               (1)
@@ -179,10 +182,18 @@
 #endif
 #define MICROPY_HW_SOFTSPI_MIN_DELAY        (0)
 #define MICROPY_HW_SOFTSPI_MAX_BAUDRATE     (esp_rom_get_cpu_ticks_per_us() * 1000000 / 200) // roughly
+#ifndef MICROPY_PY_SSL
 #define MICROPY_PY_SSL                      (1)
+#endif
+#ifndef MICROPY_SSL_MBEDTLS
 #define MICROPY_SSL_MBEDTLS                 (1)
+#endif
+#ifndef MICROPY_PY_WEBSOCKET
 #define MICROPY_PY_WEBSOCKET                (1)
+#endif
+#ifndef MICROPY_PY_WEBREPL 
 #define MICROPY_PY_WEBREPL                  (1)
+#endif
 #define MICROPY_PY_ONEWIRE                  (1)
 #define MICROPY_PY_SOCKET_EVENTS            (MICROPY_PY_WEBREPL)
 #define MICROPY_PY_BLUETOOTH_RANDOM_ADDR    (1)
