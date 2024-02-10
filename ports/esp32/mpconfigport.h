@@ -101,6 +101,7 @@
 // MICROPY_STACK_CHECK_MARGIN is further subtracted from this value to set the stack limit.
 #define MICROPY_PY_BLUETOOTH_SYNC_EVENT_STACK_SIZE (CONFIG_BT_NIMBLE_TASK_STACK_SIZE - 1024)
 #define MICROPY_PY_BLUETOOTH_ENABLE_CENTRAL_MODE (1)
+#define MICROPY_PY_BLUETOOTH_ENABLE_GATT_CLIENT (1)
 #define MICROPY_PY_BLUETOOTH_ENABLE_PAIRING_BONDING (1)
 #define MICROPY_BLUETOOTH_NIMBLE            (1)
 #define MICROPY_BLUETOOTH_NIMBLE_BINDINGS_ONLY (1)
@@ -128,7 +129,7 @@
 #define MICROPY_PY_MACHINE_ADC_BLOCK_INCLUDEFILE "ports/esp32/machine_adc_block.c"
 #define MICROPY_PY_MACHINE_PIN_MAKE_NEW     mp_pin_make_new
 #define MICROPY_PY_MACHINE_BITSTREAM        (1)
-#define MICROPY_PY_MACHINE_DHT_READINTO     (1)
+#define MICROPY_PY_MACHINE_DHT_READINTO     (0)
 #define MICROPY_PY_MACHINE_PULSE            (1)
 #define MICROPY_PY_MACHINE_PWM              (1)
 #define MICROPY_PY_MACHINE_PWM_DUTY         (1)
@@ -145,10 +146,10 @@
 #define MICROPY_PY_MACHINE_SPI              (1)
 #define MICROPY_PY_MACHINE_SOFTSPI          (1)
 #ifndef MICROPY_PY_MACHINE_DAC
-#define MICROPY_PY_MACHINE_DAC              (SOC_DAC_SUPPORTED)
+#define MICROPY_PY_MACHINE_DAC              (0)
 #endif
 #ifndef MICROPY_PY_MACHINE_I2S
-#define MICROPY_PY_MACHINE_I2S              (SOC_I2S_SUPPORTED)
+#define MICROPY_PY_MACHINE_I2S              (0)
 #endif
 #define MICROPY_PY_MACHINE_I2S_INCLUDEFILE  "ports/esp32/machine_i2s.c"
 #define MICROPY_PY_MACHINE_I2S_FINALISER    (1)
@@ -182,23 +183,28 @@
 #define MICROPY_PY_NETWORK_WLAN             (1)
 #endif
 #ifndef MICROPY_HW_ENABLE_SDCARD
-#define MICROPY_HW_ENABLE_SDCARD            (1)
+#define MICROPY_HW_ENABLE_SDCARD            (0)
 #endif
 #define MICROPY_HW_SOFTSPI_MIN_DELAY        (0)
 #define MICROPY_HW_SOFTSPI_MAX_BAUDRATE     (esp_rom_get_cpu_ticks_per_us() * 1000000 / 200) // roughly
 #ifndef MICROPY_HW_ESP_NEW_I2C_DRIVER
 #define MICROPY_HW_ESP_NEW_I2C_DRIVER       (0)
 #endif
+#ifndef MICROPY_PY_SSL
 #define MICROPY_PY_SSL                      (1)
+#endif
+#ifndef MICROPY_SSL_MBEDTLS
 #define MICROPY_SSL_MBEDTLS                 (1)
-#define MICROPY_PY_WEBSOCKET                (1)
-#define MICROPY_PY_WEBREPL                  (1)
+#endif
+#define MICROPY_PY_WEBSOCKET                (0)
+#define MICROPY_PY_WEBREPL                  (0)
 #define MICROPY_PY_ONEWIRE                  (1)
 #define MICROPY_PY_SOCKET_EVENTS            (MICROPY_PY_WEBREPL)
 #define MICROPY_PY_BLUETOOTH_RANDOM_ADDR    (1)
 #ifndef MICROPY_PY_ESP32_PCNT
-#define MICROPY_PY_ESP32_PCNT               (SOC_PCNT_SUPPORTED)
+#define MICROPY_PY_ESP32_PCNT               (0)
 #endif
+#define MICROPY_PY_CRYPTOLIB_CTR            (1)
 
 // fatfs configuration
 #define MICROPY_FATFS_ENABLE_LFN            (1)
@@ -214,7 +220,7 @@
 #define MP_STATE_PORT MP_STATE_VM
 
 #ifndef MICROPY_HW_ENABLE_USBDEV
-#define MICROPY_HW_ENABLE_USBDEV            (SOC_USB_OTG_SUPPORTED)
+#define MICROPY_HW_ENABLE_USBDEV            (0)
 #endif
 
 #if MICROPY_HW_ENABLE_USBDEV
@@ -383,7 +389,7 @@ void boardctrl_startup(void);
 
 #ifndef MICROPY_PY_NETWORK_LAN
 #if CONFIG_IDF_TARGET_ESP32 || (CONFIG_ETH_USE_SPI_ETHERNET && (CONFIG_ETH_SPI_ETHERNET_KSZ8851SNL || CONFIG_ETH_SPI_ETHERNET_DM9051 || CONFIG_ETH_SPI_ETHERNET_W5500))
-#define MICROPY_PY_NETWORK_LAN              (1)
+#define MICROPY_PY_NETWORK_LAN              (0)
 #else
 #define MICROPY_PY_NETWORK_LAN              (0)
 #endif
@@ -404,3 +410,7 @@ void boardctrl_startup(void);
 #ifndef MICROPY_ESP_IDF_ENTRY
 #define MICROPY_ESP_IDF_ENTRY app_main
 #endif
+
+// Disable unnecessary features
+#define MICROPY_PY_OPENAMP                  (0)
+#define MICROPY_PY_FRAMEBUF                 (0)
