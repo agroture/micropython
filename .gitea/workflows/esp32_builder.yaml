@@ -1,0 +1,48 @@
+name: Build and Push ESP32 Builder Image
+
+on: 
+  push:
+    tags:
+      - mp-v*
+env:
+  REGISTRY: gitea.dev.agroture.ir
+  IMAGE_NAME: gitea.dev.agroture.ir/agroture/micrpython-esp32-builder
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Extract Micropython Version
+        id: version
+        run: |
+            TAG=${{ github.ref_name }}
+            VERSION="${TAG##*[v/]}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Checkout Micropython
+        uses: https://gitea.dev.agroture.ir/local/checkout@v4
+        with:
+          submodules: 'true'
+
+      - name: Checkout Packman
+        uses: https://gitea.dev.agroture.ir/local/checkout@v4
+        with:
+          repository: 'agroture/packman'
+          path: ./packman
+          token: "903d2583b4b600d4e976451af0a2ce8cd142bcf6"
+
+      - name: Log in to Container Registry
+        uses: https://gitea.dev.agroture.ir/local/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+        
+      - name: Build and Push Docker Image
+        uses: https://gitea.dev.agroture.ir/local/build-push-action@v6
+        with:
+          context: .
+          file: ./ports/esp32/Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
