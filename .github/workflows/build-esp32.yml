@@ -1,0 +1,76 @@
+name: Build micropython for esp32
+
+on:
+  push:
+    tags:
+      - mp-v*
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board: "ESP32_GENERIC"
+            board-variant: "BP_DEV_4MB"
+            board-variant-short-name: "bp"
+            chip: "esp32"
+            chip-variant: "nosr_4mb"
+
+          - board: "ESP32_GENERIC"
+            board-variant: "OTA_BP_DEV_4MB"
+            board-variant-short-name: "ota-bp"
+            chip: "esp32"
+            chip-variant: "nosr_4mb"
+
+          - board: "ESP32_GENERIC_C3"
+            board-variant: "BP_DEV_4MB"
+            board-variant-short-name: "bp"
+            chip: "esp32c3"
+            chip-variant: "nosr_4mb"
+
+          - board: "ESP32_GENERIC_C3"
+            board-variant: "OTA_BP_DEV_4MB"
+            board-variant-short-name: "ota-bp"
+            chip: "esp32c3"
+            chip-variant: "nosr_4mb"
+
+          - board: "ESP32_GENERIC_C3"
+            board-variant: "OTA_DEV_4MB"
+            board-variant-short-name: "ota"
+            chip: "esp32c3"
+            chip-variant: "nosr_4mb"
+
+          - board: "ESP32_GENERIC_S3"
+            board-variant: "OTA_BP_DEV_SRQD_8MB"
+            board-variant-short-name: "ota-bp"
+            chip: "esp32s3"
+            chip-variant: "srqd_8mb"
+
+          - board: "ESP32_GENERIC_S3"
+            board-variant: "OTA_BP_DEV_SROT_8MB"
+            board-variant-short-name: "ota-bp"
+            chip: "esp32s3"
+            chip-variant: "srot_8mb"
+    env:
+      GH_TOKEN: ${{ secrets.AGROTURE_GA_PAT }}
+
+    steps:
+      - id: build
+        uses: agroture/mp-esp32-build@v1.1
+        with:
+          idf-ref: ${{ vars.IDF_REF }}
+          mp-ref: ${{ github.event.ref }}
+          agroture-pat: ${{ secrets.AGROTURE_GA_PAT }}
+          board: ${{ matrix.board }}
+          board-variant: ${{ matrix.board-variant }}
+          chip-variant: ${{ matrix.chip-variant }}
+          output-path: ${{ github.workspace }}/${{ matrix.chip }}_${{ matrix.chip-variant }}.${{ matrix.board-variant-short-name }}.bundle
+          cache-idf: false
+          cache-micropython: false
+
+      - name: Upload to release
+        run: |
+          readarray -d "/" -t tparts <<< "${{ github.event.ref }}/"
+          gh release upload "${tparts[2]}" ${{ github.workspace }}/${{ matrix.chip }}_${{ matrix.chip-variant }}.${{ matrix.board-variant-short-name }}.bundle --repo agroture/micropython
