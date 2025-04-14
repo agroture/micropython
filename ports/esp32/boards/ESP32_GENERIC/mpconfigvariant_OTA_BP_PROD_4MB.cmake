@@ -1,6 +1,6 @@
 set(SDKCONFIG_DEFAULTS
     ${SDKCONFIG_DEFAULTS}
-boards/sdkconfig.minimal
+    boards/sdkconfig.minimal
     boards/sdkconfig.ota.bp4mb.prod
 )
 
