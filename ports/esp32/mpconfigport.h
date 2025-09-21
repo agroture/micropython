@@ -93,7 +93,7 @@
 #define MICROPY_PY_ESPNOW                   (1)
 #endif
 #ifndef MICROPY_PY_BLUETOOTH
-#define MICROPY_PY_BLUETOOTH                (0)
+#define MICROPY_PY_BLUETOOTH                (1)
 #define MICROPY_PY_BLUETOOTH_USE_SYNC_EVENTS (1)
 #define MICROPY_PY_BLUETOOTH_USE_SYNC_EVENTS_WITH_INTERLOCK (1)
 // Event stack size is the RTOS stack size minus an allowance for the stack used
@@ -102,7 +102,7 @@
 #define MICROPY_PY_BLUETOOTH_SYNC_EVENT_STACK_SIZE (CONFIG_BT_NIMBLE_TASK_STACK_SIZE - 1024)
 #define MICROPY_PY_BLUETOOTH_ENABLE_CENTRAL_MODE (1)
 #define MICROPY_PY_BLUETOOTH_ENABLE_PAIRING_BONDING (1)
-#define MICROPY_BLUETOOTH_NIMBLE            (0)
+#define MICROPY_BLUETOOTH_NIMBLE            (1)
 #define MICROPY_BLUETOOTH_NIMBLE_BINDINGS_ONLY (1)
 #endif
 #define MICROPY_PY_HASHLIB_MD5              (1)
