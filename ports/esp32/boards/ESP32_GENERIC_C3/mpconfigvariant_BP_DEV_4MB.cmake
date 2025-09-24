@@ -1,6 +1,7 @@
 set(SDKCONFIG_DEFAULTS
     ${SDKCONFIG_DEFAULTS}
     boards/sdkconfig.ble
+    boards/sdkconfig.free_ram
     boards/sdkconfig.bp4mb.dev
 )
 
