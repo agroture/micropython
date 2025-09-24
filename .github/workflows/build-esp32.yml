@@ -17,7 +17,7 @@ jobs:
             chip: "esp32"
             chip-variant: "nosr_4mb"
           - board: "ESP32_GENERIC_C3"
-            board-variant: "OTA_BP_DEV_4MB"
+            board-variant: "BP_DEV_4MB"
             chip: "esp32c3"
             chip-variant: "nosr_4mb"
           - board: "ESP32_GENERIC_S3"
