@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - id: build
-        uses: agroture/mp-esp32-build@v1.1
+        uses: agroture/mp-esp32-build@main
         with:
           idf-ref: ${{ vars.IDF_REF }}
           mp-ref: ${{ github.event.ref }}
