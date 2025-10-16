@@ -51,7 +51,7 @@ int nimble_sprintf(char *str, const char *fmt, ...);
 #define MYNEWT_VAL_BLE_WHITELIST (1)
 
 /*** nimble/host */
-#define MYNEWT_VAL_BLE_ATT_PREFERRED_MTU (256)
+#define MYNEWT_VAL_BLE_ATT_PREFERRED_MTU (517)
 #define MYNEWT_VAL_BLE_ATT_SVR_FIND_INFO (1)
 #define MYNEWT_VAL_BLE_ATT_SVR_FIND_TYPE (1)
 #define MYNEWT_VAL_BLE_ATT_SVR_INDICATE (1)
