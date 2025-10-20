@@ -204,6 +204,7 @@
 #ifndef MICROPY_PY_ESP32_PCNT
 #define MICROPY_PY_ESP32_PCNT               (0)
 #endif
+#define MICROPY_PY_CRYPTOLIB_CTR            (1)
 
 // fatfs configuration
 #define MICROPY_FATFS_ENABLE_LFN            (1)
