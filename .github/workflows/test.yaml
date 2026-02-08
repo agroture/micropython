@@ -1,0 +1,25 @@
+name: Docker Build (Debug)
+
+on:
+  push:
+    branches: [ release/2026.2 ]
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./ports/esp32/Dockerfile  # Adjust path if your Dockerfile is elsewhere
+          push: false  # Don't push to registry
+          tags: my-app:latest
